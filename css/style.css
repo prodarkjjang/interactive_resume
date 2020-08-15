@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.outer-wrapper {
+    transform: rotate(-90deg)  translateX(-100vh);
+    transform-origin: top left;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width:100vh;
+    height:100vw;
+    position:fixed;
+    /*
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    */
+}
+::-webkit-scrollbar {
+    display:none;
+  }
+
+.wrapper {
+    transform: rotate(90deg)  translateY(-100vh);
+    transform-origin: top left;
+    width:200vw;
+    height:100vh;
+}
+
+.background {
+    display: block;
+    height:100vh;
+    position:fixed;
+    z-index: -10;
+}
+
+#derrick-container {
+    position:absolute;
+    bottom: 20px;
+    left: 50%;
+}
+
+#derrick {
+    position:relative;
+    left: -50%;
+    width: 200px;
+    height: 175px;
+    background-color:pink;
+    overflow-x: hidden;
+}
+
+#derrick-slides {
+    left: 0;
+    top: 0;
+    width: 1800px;
+    height: 400px;
+    background-image: url(../robby-slides.png);
+    background-repeat: no-repeat;
+
+    background-position: -400px -200px;
+}
+
+.university {
+    position:absolute;
+    left: 1000px;
+    bottom: 20px;
+}

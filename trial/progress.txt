@@ -1,0 +1,19 @@
+# Progress
+
+1. Horizontal scrolling
+2. Walking animation
+3. First Illustration added
+4. Backgrounds added
+5. Grounds added
+6. Title appearing
+7. Stats animations
+8. Contact
+9. Cleaning up code
+10. Player wrapper attempt
+11. Responsiveness
+
+
+ Ground assets
+ Misc assets
+ Background assets
+ 
