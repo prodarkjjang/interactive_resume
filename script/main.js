@@ -460,59 +460,17 @@ $(window).on('scroll', function() {
   // console.log("scene1end is "+scene1end);
   // title appearing
   if($(window).scrollTop() >= vw/2 && $(window).scrollTop() < scene1end) {
-    title.html("Personal Info");
-    if(current_title != 0) {
-      title.css("animation", "none");
-      window.requestAnimationFrame(function(){
-        title.css("animation", "title_fade 2s");
-      });
-      current_title = 0;
-    }
+    titleSpawn("Personal Info", 0)
   } else if($(window).scrollTop() >= scene1end && $(window).scrollTop() < scene2end) {
-    title.html("Education");
-    if(current_title != 1) {
-      title.css("animation", "none");
-      window.requestAnimationFrame(function(){
-        title.css("animation", "title_fade 2s");
-      });
-      current_title = 1;
-    }
+    titleSpawn("Education", 1)
   } else if($(window).scrollTop() >= scene2end && $(window).scrollTop() < scene3end) {
-    title.html("Work Experience");
-    if(current_title != 2) {
-      title.css("animation", "none");
-      window.requestAnimationFrame(function(){
-        title.css("animation", "title_fade 2s");
-      });
-      current_title = 2;
-    }
+    titleSpawn("Work Experience", 2)
   } else if($(window).scrollTop() >= scene3end && $(window).scrollTop() < scene4end) {
-    title.html("Personal Projects");
-    if(current_title != 3) {
-      title.css("animation", "none");
-      window.requestAnimationFrame(function(){
-        title.css("animation", "title_fade 2s");
-      });
-      current_title = 3;
-    }
+    titleSpawn("Personal Projects", 3)
   } else if($(window).scrollTop() >= scene4end && $(window).scrollTop() < scene5end) {
-    title.html("Interest");
-    if(current_title != 4) {
-      title.css("animation", "none");
-      window.requestAnimationFrame(function(){
-        title.css("animation", "title_fade 2s");
-      });
-      current_title = 4;
-    }
+    titleSpawn("Interest", 4)
   } else if($(window).scrollTop() >= scene5end && $(window).scrollTop() < scene6end) {
-    title.html("Contact");
-    if(current_title != 5) {
-      title.css("animation", "none");
-      window.requestAnimationFrame(function(){
-        title.css("animation", "title_fade 2s");
-      });
-      current_title = 5;
-    }
+    titleSpawn("Contact", 5)
   }
 
 //   // Debug
@@ -728,12 +686,25 @@ function enterScroll() {
 }
 
 function setrelativevwh(sprite, relativevw, relativevh, sum = 1, centre = 0) {
-    sprite.css("height", relativevh/100*vh);
-    sprite.css("left", currentposition + relativevw/100*vw);
-    if(sum) {
-        currentposition += (relativevw/100*vw + sprite.width());
-    }
-    if(centre) {
-        sprite.css("transform", "translateX(-50%)");
-    }
+  sprite.css("height", relativevh/100*vh);
+  sprite.css("left", currentposition + relativevw/100*vw);
+  if(sum) {
+      currentposition += (relativevw/100*vw + sprite.width());
+  }
+  if(centre) {
+      sprite.css("transform", "translateX(-50%)");
+  }
+}
+
+function titleSpawn(name, titleid) {
+  title.html(name);
+  if(current_title != titleid) {
+    title.css("animation", "none");
+    // width() as a blocking command to force reset asynchronously
+    title.width();
+    window.requestAnimationFrame(function(){
+      title.css("animation", "title_fade 2s");
+    });
+  current_title = titleid;
+  }
 }
