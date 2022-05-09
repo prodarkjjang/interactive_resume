@@ -27,7 +27,7 @@ let intel_outside = $("#intel-outside");
 let homesign = $("#homesign");
 let house_inside = $("#house-inside");
 let house_outside = $("#house-outside");
-let photoframe = $("#photoframe");
+// let photoframe = $("#photoframe");
 let chess = $("#chess");
 let pillar = $("#pillar");
 let door = $("#door");
@@ -54,7 +54,6 @@ let wip2 = $("#wip2");
 let wip3 = $("#wip3");
 
 let unifade = $("#unifade");
-
 
 let lowerball = $("#lowerball");
 let upperball = $("#upperball");
@@ -84,7 +83,7 @@ let sprites_array = [
   homesign,
   house_inside,
   house_outside,
-  photoframe,
+//   photoframe,
   chess,
   pillar,
   door,
@@ -124,12 +123,16 @@ let testtest6 = 0;
 let testtest7 = 0;
 let testtest8 = 0;
 
-// pointer event none
+let realcontent = $("#realcontent");
+
+//-----------------------------------------------------------------------------------------------------------------------------------
+// set pointer event to none means we can't click the object
 $(player).css("pointer-events", "none");
 stats.css("pointer-events", "none");
 skills.css("pointer-events", "none");
 $("#stat-wrapper").css("pointer-events", "none");
 
+//-----------------------------------------------------------------------------------------------------------------------------------
 // query screen size
 let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
@@ -141,6 +144,7 @@ let realwidth = $("#realcontent").css("width");
 let fakeheight = parseInt(realwidth, 10) + vh-vw;
 $("#fakecontent").css("height", fakeheight+"px");
 
+//-----------------------------------------------------------------------------------------------------------------------------------
 // set background
 background1.css("background-image", 'url(image/export/background-country.png)');
 background2.css("background-image", 'url(image/export/background-streetstores.png)');
@@ -148,7 +152,6 @@ background3.css("background-image", 'url(image/export/background-skyscraper.jpg)
 background4.css("background-image", 'url(image/export/background-mountains.jpg)');
 background5.css("background-image", 'url(image/export/background-cloud.png)');
 background6.css("background-image", 'url(image/export/background-tot.png)');
-
 
 // set ground
 ground1.css("background-image", 'url(image/export/ground-grassdirt.png)');
@@ -166,11 +169,12 @@ ground4.css("width", realwidth);
 ground5.css("width", realwidth);
 ground6.css("width", realwidth);
 
-// set sprites css.position -> absolute , css.bottom -> groundHeight
+// Set groundheight for players and other objects to stand on ground
 let groundHeight = ground1.css("height");
-
 player.css("bottom", groundHeight);
 
+//-----------------------------------------------------------------------------------------------------------------------------------
+// set sprites css.position -> absolute
 for (i = 0; i < sprites_array.length; i++) {
   sprites_array[i].attr('draggable', false);
   sprites_array[i].css("position", "absolute");
@@ -182,8 +186,8 @@ linkedin_icon.css("bottom", "74.3%");
 itchio_icon.css("bottom", "74.3%");
 github_icon.css("bottom", "74.3%");
 
-email_icon.css("bottom", "50%");
-resume.css("bottom", "50%");
+email_icon.css("bottom", "40%");
+resume.css("bottom", "40%");
 
 $(facebook_icon).css("z-index", "500");
 $(facebook_icon).wrap($('<a>',{
@@ -224,55 +228,72 @@ $(email_icon).wrap($('<a>',{
   href: 'mailto:derrickkueh1995@gmail.com'
 }));
 $(resume).wrap($('<a>',{
-  href: 'https://drive.google.com/file/d/1Gmql_jWqaIWEv_fuGxU6oSsiFR2Z83i2/view?usp=sharing'
+  href: './resume/Derrick_resume.pdf'
 }).attr('target','_blank'));
 
-// Checkpoint in pixels from the left
-let distance = [9700,4000,4000,8000,3700,8100];
-let checkPoint = [];
-for(let i = 0; i < 6; i++){
-  if(i == 0) {
-    checkPoint[i] = distance[i];
-  } else {
-    checkPoint[i] = checkPoint[i - 1] + distance[i];
-  }
-}
+//-----------------------------------------------------------------------------------------------------------------------------------
+// Set the position and height of the sprites based on scenes
 
-// Set the position of the sprites based on scenes
+lowerball.css("height", "20%");
+upperball.css("height", "20%");
 
-// Scene 1 - country - 5500
-pinktree.css("left", "20px");
-signboard.css("left", "1300px");
-
-// Scene 2 - UK - 4000
-let checkpoint1 = checkPoint[0] + vw/2;
-ukflag.css("left", checkpoint1);
-universitystone.css("left", checkpoint1 + 2000);
-university_inside.css("left", checkpoint1 + 2400);
-university_outside.css("left", checkpoint1 + 2400);
-
-// Scene 5 - Intel - 4000
-let checkpoint2 = checkPoint[1] + vw/2;
-malaysianflag.css("left", checkpoint2);
-intel_inside.css("left", checkpoint2 + 2000);
-intel_outside.css("left", checkpoint2 + 2000);
-// Scene 6 - Working at home - 4000
-let checkpoint3 = checkPoint[2] + vw/2;
-homesign.css("left", checkpoint3);
-house_inside.css("left", checkpoint3 + 1000);
-house_outside.css("left", checkpoint3 + 1000);
-photoframe.css("left", checkpoint3 + 2700);
-// Scene 7 - Hobbies - 3000
-let checkpoint4 = checkPoint[3] + vw/2;
-chess.css("left", checkpoint4 + 1000);
-wip3.css("left", checkpoint4 + 3000);
-// Scene 8 - Contact - 3500
-let checkpoint5 = checkPoint[4] + vw/2;
-pillar.css("left", checkpoint5 + 1200);
-door.css("left", checkpoint5 + 1200);
-facebook_icon.css("left", checkpoint5 + 1200);
-
-let width_pillar = parseInt($("#pillar").css("width"), 10);
+// Scene 1 - Self Intro
+let currentposition = 0;
+setrelativevwh(pinktree, 5, 70);
+setrelativevwh(signboard, 5, 20);
+let statpositionstart = currentposition;
+let statpositionend = currentposition + vw;
+currentposition += vw;
+let skillpositionstart = currentposition + vw/2;
+currentposition += vw/2;
+let skillpositionend = currentposition + vw;
+currentposition += vw * 2;
+// Scene 2 - Studies 
+let scene1end = currentposition - vw/2;
+setrelativevwh(ukflag, 0, 70);
+setrelativevwh(universitystone, 30, 15);
+setrelativevwh(university_inside, -10, 70, 0);
+setrelativevwh(university_outside, -10, 70);
+// Scene 3 - Work Experience
+let scene2end = currentposition;
+setrelativevwh(malaysianflag, 50, 70);
+setrelativevwh(intel_inside, 30, 70, 0);
+setrelativevwh(intel_outside, 30, 70);
+// Scene 4 - Projects
+let scene3end = currentposition;
+setrelativevwh(homesign, 50, 30);
+setrelativevwh(house_inside, 10, 50, 0);
+setrelativevwh(house_outside, 10, 50);
+// Scene 5 - Interests
+let scene4end = currentposition;
+setrelativevwh(chess, 100, 20);
+setrelativevwh(wip3, 20, 20);
+// Scene 6 - Contact Me
+let scene5end = currentposition;
+setrelativevwh(door, 120, 71, 0, 1);
+setrelativevwh(facebook_icon, 120, 10.1, 0, 1);
+setrelativevwh(pillar, 120, 85, 1, 1);
+setrelativevwh(door2, 0, 71, 0, 1);
+setrelativevwh(instagram_icon, 0, 10.1, 0, 1);
+setrelativevwh(pillar2, 0, 85, 1, 1);
+setrelativevwh(door3, 0, 71, 0, 1);
+setrelativevwh(linkedin_icon, 0, 10.1, 0, 1);
+setrelativevwh(pillar3, 0, 85, 1, 1);
+setrelativevwh(door4, 0, 71, 0, 1);
+setrelativevwh(itchio_icon, 0, 10.1, 0, 1);
+setrelativevwh(pillar4, 0, 85, 1, 1);
+setrelativevwh(door5, 0, 71, 0, 1);
+setrelativevwh(github_icon, 0, 10.1, 0, 1);
+setrelativevwh(pillar5, 0, 85, 1, 1);
+setrelativevwh(email_icon, 0, 8, 0, 1);
+setrelativevwh(resume_holder, 0, 20, 1, 1);
+setrelativevwh(resume, 1, 8, 0, 1);
+setrelativevwh(resume_holder2, 1, 20, 1, 1);
+// Scene 7 - Chair to sit on
+setrelativevwh(relaxer, 30, 10);
+let scene6end = currentposition;
+realcontent.css("width", currentposition+vw);
+$("#fakecontent").css("height", currentposition+vw+"px");
 
 $(window).on('load', function(){
 
@@ -288,117 +309,28 @@ $(window).on('load', function(){
   testtest7 = parseInt(revealHouseLeft,10) + parseInt(house_inside.css("width"),10)* 0.831;
   testtest8 = parseInt(revealHouseLeft,10) + parseInt(house_inside.css("width"),10)* 0.861;
 
-  width_pillar = parseInt($("#pillar").css("width"), 10);
-  console.log("width pillar are " + width_pillar);
-  pillar2.css("left", checkpoint5 + 1200+width_pillar);
-  door2.css("left", checkpoint5 + 1200+width_pillar);
-  instagram_icon.css("left", checkpoint5 + 1200+width_pillar);
-
-  pillar3.css("left", checkpoint5 + 1200+width_pillar*2);
-  door3.css("left", checkpoint5 + 1200+width_pillar*2);
-  linkedin_icon.css("left", checkpoint5 + 1200+width_pillar*2);
-
-  pillar4.css("left", checkpoint5 + 1200+width_pillar*3);
-  door4.css("left", checkpoint5 + 1200+width_pillar*3);
-  itchio_icon.css("left", checkpoint5 + 1200+width_pillar*3);
-
-  pillar5.css("left", checkpoint5 + 1200+width_pillar*4);
-  door5.css("left", checkpoint5 + 1200+width_pillar*4);
-  github_icon.css("left", checkpoint5 + 1200+width_pillar*4);
-
   $("#preloader").css("opacity", 0);
   setTimeout(function(){ $("#preloader").hide(); }, 2000);
 });
 
-pillar.css("transform", "translateX(-50%)");
-door.css("transform","translateX(-50%)");
-facebook_icon.css("transform","translateX(-50%)" );
-pillar2.css("transform", "translateX(-50%)");
-door2.css("transform","translateX(-50%)");
-instagram_icon.css("transform","translateX(-50%)" );
-pillar3.css("transform", "translateX(-50%)");
-door3.css("transform","translateX(-50%)");
-linkedin_icon.css("transform","translateX(-50%)" );
-pillar4.css("transform", "translateX(-50%)");
-door4.css("transform","translateX(-50%)");
-itchio_icon.css("transform","translateX(-50%)" );
-pillar5.css("transform", "translateX(-50%)");
-door5.css("transform","translateX(-50%)");
-github_icon.css("transform","translateX(-50%)" );
-
-email_icon.css("left", checkpoint5 + 4000);
-resume_holder.css("left", checkpoint5 + 4000);
-resume.css("left", checkpoint5 + 4500);
-resume_holder2.css("left", checkpoint5 + 4500);
-
-email_icon.css("transform","translateX(-50%)");
-resume.css("transform","translateX(-50%)" );
-resume_holder.css("transform","translateX(-50%)" );
-resume_holder2.css("transform","translateX(-50%)" );
-
-
-// Scene 9 - Chill - share with contact
-relaxer.css("left", checkpoint5 + 6000);
-
-// Set sprites height
-pinktree.css("height", "80%");
-signboard.css("height", "30%");
-
-ukflag.css("height", "80%");
-universitystone.css("height", "20%");
-university_inside.css("height", "80%");
-university_outside.css("height", "80%");
-
-malaysianflag.css("height", "80%");
-intel_inside.css("height", "82%");
-intel_outside.css("height", "82%");
-
-homesign.css("height", "30%");
-house_inside.css("height", "80%");
-house_outside.css("height", "80%");
-
-chess.css("height", "60%");
-
-pillar.css("height", "85%");
-door.css("height", "71%");
-pillar2.css("height", "85%");
-door2.css("height", "71%");
-pillar3.css("height", "85%");
-door3.css("height", "71%");
-pillar4.css("height", "85%");
-door4.css("height", "71%");
-pillar5.css("height", "85%");
-door5.css("height", "71%");
-facebook_icon.css("height", "10.1%");
-instagram_icon.css("height", "10.1%");
-linkedin_icon.css("height", "10.1%");
-itchio_icon.css("height", "10.1%");
-github_icon.css("height", "10.1%");
-email_icon.css("height", "10%");
-resume_holder.css("height", "30%");
-resume.css("height",  "10%");
-resume_holder2.css("height", "30%");
-relaxer.css("height", "20%");
-
-lowerball.css("height", "20%");
-upperball.css("height", "20%");
-
-
-// Reveal uni and intel and house
+// Revealing the buildings' interior
 let uniLeft = university_outside.css("left");
 let revealUniLeft = parseInt(uniLeft, 10) - vw/2;
-let revealUniRight = revealUniLeft + 1080;
-console.log("revealUniLeft is " + revealUniLeft);
+let revealUniRight = revealUniLeft + university_outside.width();
 
 let intelLeft = intel_outside.css("left");
 let revealIntelLeft = parseInt(intelLeft, 10) - vw/2;
-let revealIntelRight = revealIntelLeft + 1000;
-console.log("intelLeft is " + intelLeft);
+let revealIntelRight = revealIntelLeft + intel_outside.width();
 
 let houseLeft = house_outside.css("left");
 let revealHouseLeft = parseInt(houseLeft, 10) - vw/2;
-let revealHouseRight = revealHouseLeft + 5400;
-console.log("houseLeft is " + houseLeft);
+let revealHouseRight = revealHouseLeft + house_outside.width();
+
+if (window.matchMedia('(max-width: 768px)').matches)
+{
+  stats.attr("src","image/export/sprites/statsmobile.png");
+  skills.attr("src","image/export/sprites/skillsmobile.png");
+}
 
 
 // Resize window will recalibrate all parameters
@@ -432,45 +364,22 @@ github_icon.css("bottom", "74.3%");
 email_icon.css("bottom", "50%");
 resume.css("bottom", "50%");
 
-width_pillar = parseInt($("#pillar").css("width"), 10);
-console.log("width pillar are " + width_pillar);
-pillar2.css("left", checkpoint5 + 1200+width_pillar);
-door2.css("left", checkpoint5 + 1200+width_pillar);
-instagram_icon.css("left", checkpoint5 + 1200+width_pillar);
-pillar3.css("left", checkpoint5 + 1200+width_pillar*2);
-door3.css("left", checkpoint5 + 1200+width_pillar*2);
-linkedin_icon.css("left", checkpoint5 + 1200+width_pillar*2);
-pillar4.css("left", checkpoint5 + 1200+width_pillar*3);
-door4.css("left", checkpoint5 + 1200+width_pillar*3);
-itchio_icon.css("left", checkpoint5 + 1200+width_pillar*3);
-pillar5.css("left", checkpoint5 + 1200+width_pillar*4);
-door5.css("left", checkpoint5 + 1200+width_pillar*4);
-github_icon.css("left", checkpoint5 + 1200+width_pillar*4);
-
-// revealUniLeft = uniLeft - vw/2;
-// revealUniRight = revealUniLeft + 1000;
-
-// revealIntelLeft = intelLeft - vw/2;
-// revealIntelRight = revealIntelLeft + 1000;
-
-// revealHouseLeft = houseLeft - vw/2;
-// revealHouseRight = revealHouseLeft + 1000;
 }
 
 let lastScrollTop = pageYOffset || 0;
 // Main scroll event
 $(window).on('scroll', function() {
-  // Change background and ground 
+  // Change background and ground
   changeScene();
   // horizontal scrolling
   $("#realcontent").css("left", -$(window).scrollTop());
   // parallax effect on background
-  background1.css("left", -$(window).scrollTop()/40);
-  background2.css("left", checkPoint[0]/49-$(window).scrollTop()/50);
-  background3.css("left", checkPoint[1]/49-$(window).scrollTop()/50);
-  background4.css("left", checkPoint[2]/30-$(window).scrollTop()/30);
-  background5.css("left", checkPoint[3]/30-$(window).scrollTop()/30);
-  background6.css("left", checkPoint[4]/49-$(window).scrollTop()/50);
+  background1.css("left", -$(window).scrollTop()/scene1end*background1.width()/12);
+  background2.css("left", (scene1end-$(window).scrollTop())/(scene2end-scene1end)*background2.width()/12);
+  background3.css("left", (scene2end-$(window).scrollTop())/(scene3end-scene2end)*background3.width()/12);
+  background4.css("left", (scene3end-$(window).scrollTop())/(scene4end-scene3end)*background4.width()/12);
+  background5.css("left", (scene4end-$(window).scrollTop())/(scene5end-scene4end)*background5.width()/12);
+  background6.css("left", (scene5end-$(window).scrollTop())/(scene6end-scene5end)*background6.width()/12);
   // scrolldown fading
   enterScroll();
   // university fading
@@ -488,68 +397,69 @@ $(window).on('scroll', function() {
   // player walking animation
     player.css("height", "419px");
     player.css("width", "209px");
-  var st = window.pageYOffset || document.documentElement.scrollTop; 
+  var st = window.pageYOffset || document.documentElement.scrollTop;
   if (st > lastScrollTop){
      // downscroll code
-    if($(window).scrollTop() < checkPoint[0]) {
+    if($(window).scrollTop() < scene1end) {
       player.css("animation", "walkingRight_casual 0.8s step-end infinite");
-    } else if($(window).scrollTop() >= checkPoint[0] && $(window).scrollTop() < checkPoint[1]) {
+    } else if($(window).scrollTop() >= scene1end && $(window).scrollTop() < scene2end) {
       player.css("animation", "walkingRight_cold 0.8s step-end infinite");
-    } else if($(window).scrollTop() >= checkPoint[1] && $(window).scrollTop() < checkPoint[2]) {
+    } else if($(window).scrollTop() >= scene2end && $(window).scrollTop() < scene3end) {
       player.css("animation", "walkingRight_formal 0.8s step-end infinite");
-    } else if($(window).scrollTop() >= checkPoint[2] && $(window).scrollTop() < checkPoint[3]) {
+    } else if($(window).scrollTop() >= scene3end && $(window).scrollTop() < scene4end) {
       player.css("animation", "walkingRight_mask 0.8s step-end infinite");
-    } else if($(window).scrollTop() >= checkPoint[3] && $(window).scrollTop() < checkPoint[4]) {
+    } else if($(window).scrollTop() >= scene4end && $(window).scrollTop() < scene5end) {
       player.css("animation", "walkingRight_magical 0.8s step-end infinite");
       player.css("height", "500.2px");
       player.css("width", "520.2px");
-    } else if($(window).scrollTop() >= checkPoint[4] && $(window).scrollTop() < checkPoint[5]) {
+    } else if($(window).scrollTop() >= scene5end && $(window).scrollTop() < scene6end) {
       player.css("animation", "walkingRight_holy 0.8s step-end infinite");
     }
   } else {
      // upscroll code
-     
-    if($(window).scrollTop() < checkPoint[0]) {
+    if($(window).scrollTop() < scene1end) {
       player.css("animation", "walkingLeft_casual 0.8s step-end infinite");
-    } else if($(window).scrollTop() >= checkPoint[0] && $(window).scrollTop() < checkPoint[1]) {
+    } else if($(window).scrollTop() >= scene1end && $(window).scrollTop() < scene2end) {
       player.css("animation", "walkingLeft_cold 0.8s step-end infinite");
-    } else if($(window).scrollTop() >= checkPoint[1] && $(window).scrollTop() < checkPoint[2]) {
+    } else if($(window).scrollTop() >= scene2end && $(window).scrollTop() < scene3end) {
       player.css("animation", "walkingLeft_formal 0.8s step-end infinite");
-    } else if($(window).scrollTop() >= checkPoint[2] && $(window).scrollTop() < checkPoint[3]) {
+    } else if($(window).scrollTop() >= scene3end && $(window).scrollTop() < scene4end) {
       player.css("animation", "walkingLeft_mask 0.8s step-end infinite");
-    } else if($(window).scrollTop() >= checkPoint[3] && $(window).scrollTop() < checkPoint[4]) {
+    } else if($(window).scrollTop() >= scene4end && $(window).scrollTop() < scene5end) {
       player.css("animation", "walkingLeft_magical 0.8s step-end infinite");
       player.css("height", "500.2px");
       player.css("width", "520.2px");
-    } else if($(window).scrollTop() >= checkPoint[4] && $(window).scrollTop() < checkPoint[5]) {
+    } else if($(window).scrollTop() >= scene5end && $(window).scrollTop() < scene6end) {
       player.css("animation", "walkingLeft_holy 0.8s step-end infinite");
     }
   }
   lastScrollTop = st <= 0 ? 0 : st; // For Mobile or negative scrolling
 
-  // back to idle after walking 
+  // back to idle after walking
   clearTimeout($.data(this, 'scrollTimer'));
   $.data(this, 'scrollTimer', setTimeout(function() {
-      if($(window).scrollTop() < checkPoint[0]) {
+      if($(window).scrollTop() < scene1end) {
         player.css("animation", "idle_casual 0.8s step-end infinite");
-      } else if($(window).scrollTop() >= checkPoint[0] && $(window).scrollTop() < checkPoint[1]) {
+      } else if($(window).scrollTop() >= scene1end && $(window).scrollTop() < scene2end) {
         player.css("animation", "idle_cold 0.1s step-end infinite");
-      } else if($(window).scrollTop() >= checkPoint[1] && $(window).scrollTop() < checkPoint[2]) {
+      } else if($(window).scrollTop() >= scene2end && $(window).scrollTop() < scene3end) {
         player.css("animation", "idle_formal 0.8s step-end infinite");
-      } else if($(window).scrollTop() >= checkPoint[2] && $(window).scrollTop() < checkPoint[3]) {
+      } else if($(window).scrollTop() >= scene3end && $(window).scrollTop() < scene4end) {
         player.css("animation", "idle_mask 0.8s step-end infinite");
-      } else if($(window).scrollTop() >= checkPoint[3] && $(window).scrollTop() < checkPoint[4]) {
+      } else if($(window).scrollTop() >= scene4end && $(window).scrollTop() < scene5end) {
         player.css("animation", "idle_magical 0.8s step-end infinite");
         player.css("height", "500.2px");
         player.css("width", "520.2px");
-      } else if($(window).scrollTop() >= checkPoint[4] && $(window).scrollTop() < checkPoint[5]) {
+      } else if($(window).scrollTop() >= scene5end && $(window).scrollTop() < scene6end) {
         player.css("animation", "idle_holy 0.8s step-end infinite");
       }
       console.log("Haven't scrolled in 250ms!");
   }, 250));
 
+  // console.log("$(window).scrollTop() is "+$(window).scrollTop());
+  // console.log("scene1end is "+scene1end);
   // title appearing
-  if($(window).scrollTop() >= 300 && $(window).scrollTop() < checkPoint[0]) {
+  if($(window).scrollTop() >= vw/2 && $(window).scrollTop() < scene1end) {
     title.html("Personal Info");
     if(current_title != 0) {
       title.css("animation", "none");
@@ -558,7 +468,7 @@ $(window).on('scroll', function() {
       });
       current_title = 0;
     }
-  } else if($(window).scrollTop() >= checkPoint[0] && $(window).scrollTop() < checkPoint[1]) {
+  } else if($(window).scrollTop() >= scene1end && $(window).scrollTop() < scene2end) {
     title.html("Education");
     if(current_title != 1) {
       title.css("animation", "none");
@@ -567,7 +477,7 @@ $(window).on('scroll', function() {
       });
       current_title = 1;
     }
-  } else if($(window).scrollTop() >= checkPoint[1] && $(window).scrollTop() < checkPoint[2]) {
+  } else if($(window).scrollTop() >= scene2end && $(window).scrollTop() < scene3end) {
     title.html("Work Experience");
     if(current_title != 2) {
       title.css("animation", "none");
@@ -576,7 +486,7 @@ $(window).on('scroll', function() {
       });
       current_title = 2;
     }
-  } else if($(window).scrollTop() >= checkPoint[2] && $(window).scrollTop() < checkPoint[3]) {
+  } else if($(window).scrollTop() >= scene3end && $(window).scrollTop() < scene4end) {
     title.html("Personal Projects");
     if(current_title != 3) {
       title.css("animation", "none");
@@ -585,7 +495,7 @@ $(window).on('scroll', function() {
       });
       current_title = 3;
     }
-  } else if($(window).scrollTop() >= checkPoint[3] && $(window).scrollTop() < checkPoint[4]) {
+  } else if($(window).scrollTop() >= scene4end && $(window).scrollTop() < scene5end) {
     title.html("Interest");
     if(current_title != 4) {
       title.css("animation", "none");
@@ -594,7 +504,7 @@ $(window).on('scroll', function() {
       });
       current_title = 4;
     }
-  } else if($(window).scrollTop() >= checkPoint[4] && $(window).scrollTop() < checkPoint[5]) {
+  } else if($(window).scrollTop() >= scene5end && $(window).scrollTop() < scene6end) {
     title.html("Contact");
     if(current_title != 5) {
       title.css("animation", "none");
@@ -604,20 +514,15 @@ $(window).on('scroll', function() {
       current_title = 5;
     }
   }
-  
 
-  // Debug
-  console.log($(window).scrollTop());
-  console.log("pageyoffset is " + window.pageYOffset);
+//   // Debug
+//   console.log($(window).scrollTop());
+//   console.log("pageyoffset is " + window.pageYOffset);
 });
-
-
-
-
 
 function enterUniversity() {
   let scrollPos = $(window).scrollTop();
-  if (scrollPos > revealUniLeft && scrollPos < revealUniRight) { 
+  if (scrollPos > revealUniLeft && scrollPos < revealUniRight) {
     university_outside.fadeOut(400);
   } else {
     university_outside.fadeIn(400);
@@ -626,7 +531,7 @@ function enterUniversity() {
 
 function enterIntel() {
   let scrollPos = $(window).scrollTop();
-  if (scrollPos > revealIntelLeft && scrollPos < revealIntelRight) { 
+  if (scrollPos > revealIntelLeft && scrollPos < revealIntelRight) {
     intel_outside.fadeOut(400);
   } else {
     intel_outside.fadeIn(400);
@@ -635,7 +540,7 @@ function enterIntel() {
 
 function enterHouse() {
   let scrollPos = $(window).scrollTop();
-  if (scrollPos > revealHouseLeft && scrollPos < revealHouseRight) { 
+  if (scrollPos > revealHouseLeft && scrollPos < revealHouseRight) {
     house_outside.fadeOut(400);
   } else {
     house_outside.fadeIn(400);
@@ -644,22 +549,22 @@ function enterHouse() {
 
 function changeScene() {
   let scrollPos = $(window).scrollTop();
-  if (scrollPos < checkPoint[0]) { 
+  if (scrollPos < scene1end) {
     $("#ground").css("background-image", 'url(image/export/1.png)');
     activeBackground(1);
-  } else if (scrollPos >= checkPoint[0] && scrollPos < checkPoint[1]) {
+  } else if (scrollPos >= scene1end && scrollPos < scene2end) {
     $("#ground").css("background-image", 'url(image/export/2.png)');
     activeBackground(2);
-  } else if (scrollPos >= checkPoint[1] && scrollPos < checkPoint[2]) {
+  } else if (scrollPos >= scene2end && scrollPos < scene3end) {
     $("#ground").css("background-image", 'url(image/export/5.png)');
     activeBackground(3);
-  } else if (scrollPos >= checkPoint[2] && scrollPos < checkPoint[3]) {
+  } else if (scrollPos >= scene3end && scrollPos < scene4end) {
     $("#ground").css("background-image", 'url(image/export/3.png)');
     activeBackground(4);
-  } else if (scrollPos >= checkPoint[3] && scrollPos < checkPoint[4]) {
+  } else if (scrollPos >= scene4end && scrollPos < scene5end) {
     $("#ground").css("background-image", 'url(image/export/7.png)');
     activeBackground(5);
-  } else if (scrollPos >= checkPoint[4] && scrollPos < checkPoint[5]) {
+  } else if (scrollPos >= scene5end && scrollPos < scene6end) {
     $("#ground").css("background-image", 'url(image/export/8.png)');
     activeBackground(6);
   }
@@ -683,7 +588,7 @@ function activeBackground(background) {
 }
 
 
-// to do: 
+// to do:
 //// must have
 // preload the rest in SS  - nid to preload!!!!!
 // make it work on safari
@@ -706,8 +611,8 @@ function activeBackground(background) {
 
 function enterStat() {
   let scrollPos = $(window).scrollTop();
-  if (scrollPos > 2200 && scrollPos < 4200) { 
-    console.log("im in");
+  if (scrollPos > statpositionstart && scrollPos < statpositionend) {
+    // console.log("im in stats");
     if(inStats == 0) {
       lowerball.css("animation", "none");
       upperball.css("animation", "none");
@@ -723,7 +628,7 @@ function enterStat() {
     if(inStats == 1) {
       lowerball.css("animation", "none");
       upperball.css("animation", "none");
-      stats.css("animation", "none"); 
+      stats.css("animation", "none");
       window.requestAnimationFrame(function(){
         lowerball.css("animation", "lowerball-movement 0.6s reverse forwards ");
         upperball.css("animation", "upperball-movement 0.6s reverse forwards ");
@@ -736,8 +641,8 @@ function enterStat() {
 
 function enterSkill() {
   let scrollPos = $(window).scrollTop();
-  if (scrollPos > 6200 && scrollPos < 8200) { 
-    console.log("im in");
+  if (scrollPos > skillpositionstart && scrollPos < skillpositionend) {
+    // console.log("im in skills");
     if(inSkills == 0) {
       lowerball.css("animation", "none");
       upperball.css("animation", "none");
@@ -753,7 +658,7 @@ function enterSkill() {
     if(inSkills == 1) {
       lowerball.css("animation", "none");
       upperball.css("animation", "none");
-      skills.css("animation", "none"); 
+      skills.css("animation", "none");
       window.requestAnimationFrame(function(){
         lowerball.css("animation", "lowerball-movement 0.6s reverse forwards ");
         upperball.css("animation", "upperball-movement 0.6s reverse forwards ");
@@ -767,11 +672,9 @@ function enterSkill() {
 // enter portfolio
 function enterPortfolio() {
   let scrollPos = $(window).scrollTop();
-  console.log("portfolio-----------");
- 
-  
-  if (scrollPos > testtest && scrollPos < testtest2) { 
-    
+
+  if (scrollPos > testtest && scrollPos < testtest2) {
+
     portfolio_img.attr("src","image/ss/interactive-resume.png");
     portfolio_header.html("Derrick's Interactive Resume");
     portfolio_paragraph.html("I got the inspiration to create my own interactive resume after coming across cool websites like NuuNeoi's profile, Salvato's and Leonardi's \
@@ -779,7 +682,7 @@ function enterPortfolio() {
     It got me thinking'If I can animate something in Unity, what is stopping me from making something cool in my own website?' Thus, it begins. ");
     portfolio_link.attr("href","#portfolio-link");
     portfolio.fadeIn(300);
-  } else if (scrollPos > testtest3 && scrollPos < testtest4) { 
+  } else if (scrollPos > testtest3 && scrollPos < testtest4) {
     portfolio_img.attr("src","image/ss/sticky-slime-situation.png");
     portfolio_header.html("Sticky Slime Situation");
     portfolio_paragraph.html("This was my game submission for my second gamejam - GMTK2020. The theme was 'Out Of Control' and there was a two day time limit. My initial \
@@ -788,7 +691,7 @@ function enterPortfolio() {
     so it became a sudden death mode for the player. Way to go huh.");
     portfolio_link.attr("href","https://ahpek.itch.io/sticky-slime-situation");
     portfolio.fadeIn(300);
-  } else if (scrollPos > testtest5 && scrollPos < testtest6) { 
+  } else if (scrollPos > testtest5 && scrollPos < testtest6) {
     portfolio_img.attr("src","image/ss/baodesignstudio.png");
     portfolio_header.html("Bao Design Studio");
     portfolio_paragraph.html("My friend had just started his own interior design company and he told me a website would help to boost his online presence. I took it as \
@@ -799,7 +702,7 @@ function enterPortfolio() {
     builder, it was much more powerful than that. I ended up recreating the website in wordpress using Elementor and that was that. For now.");
     portfolio_link.attr("href","https://baodesignstudio.com/");
     portfolio.fadeIn(300);
-  } else if (scrollPos > testtest7 && scrollPos < testtest8) { 
+  } else if (scrollPos > testtest7 && scrollPos < testtest8) {
     portfolio_img.attr("src","image/ss/liar.png");
     portfolio_header.html("Loner In A Relationship");
     portfolio_paragraph.html("Community Game Jam 2019 - my first ever gamejam hosted by fellow game dev youtubers. The theme was 'liar' with a one week time limit and \
@@ -817,9 +720,20 @@ function enterPortfolio() {
 
 function enterScroll() {
   let scrollPos = $(window).scrollTop();
-  if (scrollPos >= 0 && scrollPos < 300) { 
+  if (scrollPos >= 0 && scrollPos < 300) {
     $("#scrolldown").fadeIn();
   } else {
     $("#scrolldown").fadeOut();
   }
+}
+
+function setrelativevwh(sprite, relativevw, relativevh, sum = 1, centre = 0) {
+    sprite.css("height", relativevh/100*vh);
+    sprite.css("left", currentposition + relativevw/100*vw);
+    if(sum) {
+        currentposition += (relativevw/100*vw + sprite.width());
+    }
+    if(centre) {
+        sprite.css("transform", "translateX(-50%)");
+    }
 }
