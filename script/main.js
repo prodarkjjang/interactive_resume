@@ -162,14 +162,6 @@ ground4.css("background-image", 'url(image/export/ground-squarestone.png)');
 ground5.css("background-image", 'url(image/export/ground-magical.png)');
 ground6.css("background-image", 'url(image/export/ground-tot.png)');
 
-// set ground width
-ground1.css("width", realwidth);
-ground2.css("width", realwidth);
-ground3.css("width", realwidth);
-ground4.css("width", realwidth);
-ground5.css("width", realwidth);
-ground6.css("width", realwidth);
-
 // Set groundheight for players and other objects to stand on ground
 let groundHeight = ground1.css("height");
 player.css("bottom", groundHeight);
@@ -296,6 +288,14 @@ let scene6end = currentposition;
 currentposition+=vw/2;
 realcontent.css("width", currentposition + "px");
 fakecontent.css("height", currentposition + vh - vw + "px");
+
+// set ground width
+ground1.css("width", currentposition + vw + "px");
+ground2.css("width", currentposition + vw + "px");
+ground3.css("width", currentposition + vw + "px");
+ground4.css("width", currentposition + vw + "px");
+ground5.css("width", currentposition + vw + "px");
+ground6.css("width", currentposition + vw + "px");
 
 // preload settings
 $(window).on('load', function(){
