@@ -297,6 +297,7 @@ currentposition+=vw/2;
 realcontent.css("width", currentposition + "px");
 fakecontent.css("height", currentposition + vh - vw + "px");
 
+// preload settings
 $(window).on('load', function(){
 
   testtest = parseInt(revealHouseLeft,10) + parseInt(house_inside.css("width"),10)* 0.365;
