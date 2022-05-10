@@ -124,6 +124,7 @@ let testtest7 = 0;
 let testtest8 = 0;
 
 let realcontent = $("#realcontent");
+let fakecontent = $("#fakecontent");
 
 //-----------------------------------------------------------------------------------------------------------------------------------
 // set pointer event to none means we can't click the object
@@ -139,10 +140,10 @@ let vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight
 /// potential better alternative: var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 
 // set up fake vertical scrolling height
-$("#realcontent").css("height", vh);
-let realwidth = $("#realcontent").css("width");
+realcontent.css("height", vh);
+let realwidth = realcontent.css("width");
 let fakeheight = parseInt(realwidth, 10) + vh-vw;
-$("#fakecontent").css("height", fakeheight+"px");
+fakecontent.css("height", fakeheight+"px");
 
 //-----------------------------------------------------------------------------------------------------------------------------------
 // set background
@@ -292,8 +293,9 @@ setrelativevwh(resume_holder2, 1, 20, 1, 1);
 // Scene 7 - Chair to sit on
 setrelativevwh(relaxer, 30, 10);
 let scene6end = currentposition;
-realcontent.css("width", currentposition+vw);
-$("#fakecontent").css("height", currentposition+vw+"px");
+currentposition+=vw/2;
+realcontent.css("width", currentposition + "px");
+fakecontent.css("height", currentposition + vh - vw + "px");
 
 $(window).on('load', function(){
 
@@ -338,41 +340,41 @@ window.addEventListener("resize", recalibrate);
 
 function recalibrate() {
   // set height of background;
-vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-/// potential better alternative: var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+  vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+  vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+  /// potential better alternative: var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 
-$("#realcontent").css("height", vh);
-realwidth = $("#realcontent").css("width");
-fakeheight = parseInt(realwidth, 10) + vh-vw;
-$("#fakecontent").css("height", fakeheight+"px");
-ground1.css("width", realwidth);
-groundHeight = ground1.css("height");
+  realcontent.css("height", vh);
+  realwidth = realcontent.css("width");
+  fakeheight = parseInt(realwidth, 10) + vh-vw;
+  fakecontent.css("height", fakeheight+"px");
+  ground1.css("width", realwidth);
+  groundHeight = ground1.css("height");
 
-player.css("bottom", groundHeight);
-for (i = 0; i < sprites_array.length; i++) {
-  sprites_array[i].css("position", "absolute");
-  sprites_array[i].css("bottom", groundHeight);
+  player.css("bottom", groundHeight);
+  for (i = 0; i < sprites_array.length; i++) {
+    sprites_array[i].css("position", "absolute");
+    sprites_array[i].css("bottom", groundHeight);
+  }
+
+  facebook_icon.css("bottom", "74.3%");
+  instagram_icon.css("bottom", "74.3%");
+  linkedin_icon.css("bottom", "74.3%");
+  itchio_icon.css("bottom", "74.3%");
+  github_icon.css("bottom", "74.3%");
+
+  email_icon.css("bottom", "50%");
+  resume.css("bottom", "50%");
 }
 
-facebook_icon.css("bottom", "74.3%");
-instagram_icon.css("bottom", "74.3%");
-linkedin_icon.css("bottom", "74.3%");
-itchio_icon.css("bottom", "74.3%");
-github_icon.css("bottom", "74.3%");
 
-email_icon.css("bottom", "50%");
-resume.css("bottom", "50%");
-
-}
-
-let lastScrollTop = pageYOffset || 0;
 // Main scroll event
+let lastScrollTop = pageYOffset || 0;
 $(window).on('scroll', function() {
   // Change background and ground
   changeScene();
   // horizontal scrolling
-  $("#realcontent").css("left", -$(window).scrollTop());
+  realcontent.css("left", -$(window).scrollTop());
   // parallax effect on background
   background1.css("left", -$(window).scrollTop()/scene1end*background1.width()/12);
   background2.css("left", (scene1end-$(window).scrollTop())/(scene2end-scene1end)*background2.width()/12);
@@ -395,8 +397,8 @@ $(window).on('scroll', function() {
   // skill appearing
   enterSkill();
   // player walking animation
-    player.css("height", "419px");
-    player.css("width", "209px");
+  player.css("height", "419px");
+  player.css("width", "209px");
   var st = window.pageYOffset || document.documentElement.scrollTop;
   if (st > lastScrollTop){
      // downscroll code
@@ -453,7 +455,7 @@ $(window).on('scroll', function() {
       } else if($(window).scrollTop() >= scene5end && $(window).scrollTop() < scene6end) {
         player.css("animation", "idle_holy 0.8s step-end infinite");
       }
-      console.log("Haven't scrolled in 250ms!");
+      // console.log("Haven't scrolled in 250ms!");
   }, 250));
 
   // console.log("$(window).scrollTop() is "+$(window).scrollTop());
