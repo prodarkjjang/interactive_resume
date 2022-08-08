@@ -21,8 +21,9 @@
     left: 0px;
     bottom: 0px;
     height:100vh;
-    width: 120vw;
+    width: 120%;
     background-position: 0 0;
+    /* background-size: cover; */
     background-size: 100% 100%;
     background-repeat: no-repeat;
     opacity: 0;
@@ -88,6 +89,21 @@
   opacity: 0;
   z-index: 5;
 }
+
+/* To fix flickering - https://stackoverflow.com/questions/14922379/how-to-use-preloaded-css-spritesheet-in-javascript */
+.sprite { background-image:url("../image/export/spritesheet/spritesheet-casual.png") }
+.sprite { background-image:url("../image/export/spritesheet/spritesheet-cold.png") }
+.sprite { background-image:url("../image/export/spritesheet/spritesheet-formal.png") }
+.sprite { background-image:url("../image/export/spritesheet/spritesheet-mask.png") }
+.sprite { background-image:url("../image/export/spritesheet/spritesheet-magical.png") }
+.sprite { background-image:url("../image/export/spritesheet/spritesheet-holy.png") }
+
+#fire {
+    background-position: -100px -50px;
+    height: 20px;
+    width:  40px;
+  }
+
 
 .fade-animation {
   animation: title_fade 2s;

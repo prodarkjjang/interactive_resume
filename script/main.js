@@ -170,6 +170,14 @@ background4.css("background-image", 'url(image/export/background-mountains.jpg)'
 background5.css("background-image", 'url(image/export/background-cloud.png)');
 background6.css("background-image", 'url(image/export/background-tot.png)');
 
+// set background size here since it doesn't apply in css probably due to no url yet
+background1.css("background-size", '100% 100%');
+background2.css("background-size", '100% 100%');
+background3.css("background-size", '100% 100%');
+background4.css("background-size", '100% 100%');
+background5.css("background-size", '100% 100%');
+background6.css("background-size", '100% 100%');
+
 // set ground
 ground1.css("background-image", 'url(image/export/ground-grassdirt.png)');
 ground2.css("background-image", 'url(image/export/ground-grassstone.png)');
